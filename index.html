@@ -59,6 +59,28 @@
             <p>₹2,999</p>
           </a>
           <button onclick="addToCart('Luxury Watch', 2999)">Add to Cart</button>
+/* Basic Reset */
+
+{ margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+
+
+body { background-color: #f5f5f5; color: #333; line-height: 1.6; }
+
+.container { width: 90%; max-width: 1200px; margin: auto; }
+
+/* Header */ header { background: #0d6efd; padding: 1rem 0; color: #fff; } header .logo { font-size: 1.8rem; font-weight: bold; } header nav ul { display: flex; list-style: none; justify-content: flex-end; gap: 1rem; } header nav a { color: #fff; text-decoration: none; }
+
+/* Hero Section */ .hero { background: #e3f2fd; padding: 3rem 0; text-align: center; } .hero h2 { font-size: 2.5rem; margin-bottom: 1rem; } .hero .btn { background: #0d6efd; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 5px; text-decoration: none; font-size: 1rem; }
+
+/* Product Grid */ .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-top: 2rem; } .product { background: white; padding: 1rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center; } .product img { max-width: 100%; height: auto; border-radius: 8px; } .product h3 { margin: 0.5rem 0; } .product p { font-weight: bold; color: #0d6efd; } .product button { background: #0d6efd; color: white; border: none; padding: 0.5rem 1rem; cursor: pointer; margin-top: 0.5rem; border-radius: 5px; }
+
+/* Footer */ footer { background: #0d6efd; color: white; text-align: center; padding: 1rem 0; margin-top: 3rem; }
+
+/* Forms */ form { display: flex; flex-direction: column; gap: 1rem; background: white; padding: 2rem; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); max-width: 500px; margin: auto; margin-top: 2rem; } form input, form textarea, form select { padding: 0.75rem; border: 1px solid #ccc; border-radius: 5px; font-size: 1rem; } form button { background: #0d6efd; color: white; padding: 0.75rem; border: none; border-radius: 5px; cursor: pointer; font-size: 1rem; }
+
+/* Responsive */ @media(max-width: 600px) { header nav ul { flex-direction: column; align-items: flex-start; } .hero h2 { font-size: 1.8rem; } .hero .btn { font-size: 0.9rem; padding: 0.5rem 1rem; } }
+
+
         </div>
       </div>
     </div>
