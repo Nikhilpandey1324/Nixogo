@@ -1,423 +1,133 @@
-<!doctype html>
-<html lang="hi">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Premium Login • Nivgo</title>
-
-  <!-- Premium font -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nixigo Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <style>
-    :root{
-      --bg1:#071427;
-      --bg2:#0b1020;
-      --card: rgba(255,255,255,0.06);
-      --glass-border: rgba(255,255,255,0.06);
-      --accent: #6ea8ff;
-      --accent-2: #8affc1;
-      --muted: rgba(255,255,255,0.7);
-      --radius: 16px;
-      --shadow: 0 12px 40px rgba(2,6,23,0.6);
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family:'Poppins',system-ui,Segoe UI,Roboto,-apple-system,Arial;}
-    body{
-      background: linear-gradient(120deg,var(--bg1), #0b2338 40%, #2b0b2b 100%);
-      overflow:hidden;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:28px;
-      color: #eaf0ff;
+    body {
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      background: black;
+      position: relative;
+      color: white;
     }
 
-    /* Animated gradient behind everything */
-    .bg-gradient{
-      position:fixed; inset: -20% -20%;
-      background: radial-gradient(30% 40% at 10% 20%, rgba(110,168,255,0.16), transparent 10%),
-                  radial-gradient(40% 50% at 90% 80%, rgba(138,255,193,0.12), transparent 12%),
-                  linear-gradient(120deg, rgba(57,72,255,0.06), rgba(255,80,120,0.04));
-      filter: blur(40px);
-      transform: translateZ(0);
-      animation: bgMove 20s linear infinite alternate;
-      z-index:0;
-      pointer-events:none;
-    }
-    @keyframes bgMove {
-      0%{transform:translate(-5%, -5%) scale(1)}
-      50%{transform:translate(5%, 5%) scale(1.05)}
-      100%{transform:translate(-5%, -5%) scale(1)}
+    /* Moving Gradient Background */
+    body::before {
+      content: "";
+      position: absolute;
+      width: 200%;
+      height: 200%;
+      background: radial-gradient(circle at var(--x, 50%) var(--y, 50%), 
+                  rgba(0, 200, 255, 0.6), rgba(255, 0, 150, 0.4), rgba(0, 255, 100, 0.4));
+      animation: rotate 20s linear infinite;
+      z-index: 0;
+      transition: all 0.2s ease;
     }
 
-    /* Soft moving fog layers */
-    .fog{
-      position:fixed; inset: -40% -40%;
-      background:
-        radial-gradient(40% 30% at 20% 20%, rgba(91,140,255,0.14), transparent 20%),
-        radial-gradient(50% 40% at 80% 80%, rgba(255,80,80,0.12), transparent 20%),
-        radial-gradient(35% 30% at 50% 60%, rgba(120,255,180,0.08), transparent 20%);
-      filter:blur(120px);
-      animation: fogFlow 30s linear infinite;
-      z-index:0;
-      pointer-events:none;
-    }
-    @keyframes fogFlow {
-      0%{transform: translate(-10%, -8%) scale(1)}
-      50%{transform: translate(6%, 6%) scale(1.08)}
-      100%{transform: translate(-10%, -8%) scale(1)}
+    @keyframes rotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
     }
 
-    /* container */
-    .wrap{
-      width:100%;
-      max-width:980px;
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:28px;
-      align-items:center;
-      z-index:1;
+    .login-box {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      text-align: center;
+      width: 350px;
     }
 
-    /* preview area (left) - mock app preview */
-    .preview {
-      min-height:420px;
-      border-radius:18px;
-      background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.015));
-      border: 1px solid rgba(255,255,255,0.03);
-      box-shadow: var(--shadow);
-      padding:18px;
-      position:relative;
-      overflow:hidden;
-    }
-    .preview .title{
-      display:flex;
-      align-items:center;
-      gap:12px;
-    }
-    .pill{
-      display:inline-block;
-      height:40px; padding:8px 14px; border-radius:999px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.04), rgba(255,255,255,0.02));
-      color:var(--muted); font-weight:600;
+    .logo img {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      border: 3px solid white;
+      object-fit: cover;
+      margin-bottom: 15px;
     }
 
-    /* inside preview show a fake app window */
-    .app-window{
-      margin-top:20px;
-      height:300px;
-      border-radius:12px;
-      background: linear-gradient(180deg, rgba(10,18,30,0.8), rgba(6,12,22,0.6));
-      border:1px solid rgba(255,255,255,0.02);
-      padding:18px;
-      color:var(--muted);
-      display:flex;
-      flex-direction:column;
-      gap:12px;
-      justify-content:center;
-      align-items:center;
-      position:relative;
-    }
-    .app-window .mock-screen{
-      width:100%;
-      height:200px;
-      border-radius:10px;
-      background: linear-gradient(90deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      display:flex; align-items:center; justify-content:center;
-      font-weight:600; color: #bfcffb;
-      position:relative;
-      overflow:hidden;
+    h2 {
+      margin-bottom: 20px;
+      font-size: 24px;
+      font-weight: 600;
     }
 
-    /* login card */
-    .card {
-      width:100%;
-      max-width:420px;
-      border-radius: var(--radius);
-      background: linear-gradient(180deg, rgba(255,255,255,0.028), rgba(255,255,255,0.02));
-      border: 1px solid var(--glass-border);
-      padding:34px;
-      box-shadow: var(--shadow);
-      backdrop-filter: blur(10px) saturate(120%);
-    }
-    .brand{
-      display:flex; align-items:center; gap:14px;
-    }
-    .logo{
-      width:56px;height:56px;border-radius:12px;
-      background:linear-gradient(135deg,var(--accent), #9aaeff);
-      display:grid; place-items:center; color:#061127; font-weight:700;
-      font-size:18px;
-    }
-    h1{margin:0;font-size:1.4rem}
-    p.lead{margin:6px 0 0; color:var(--muted); font-size:0.95rem}
-
-    form{margin-top:18px}
-    .field{margin-top:14px}
-    label{display:block;color:var(--muted);font-size:0.86rem;margin-bottom:8px}
-    .control{position:relative}
-    .control .input-icon{
-      position:absolute; left:12px; top:50%; transform:translateY(-50%); font-size:16px; opacity:0.9;
-      pointer-events:none;
-    }
-    input{
-      width:100%;
-      padding:12px 14px 12px 42px;
-      border-radius:12px;
-      border:1px solid rgba(255,255,255,0.04);
-      background:rgba(6,12,22,0.5);
-      color: #eaf0ff;
-      outline:none;
-      transition: box-shadow .18s, border-color .18s, transform .06s;
-      font-size:0.95rem;
-    }
-    input::placeholder{color: rgba(230,240,255,0.3)}
-    input:focus{ box-shadow: 0 6px 24px rgba(74,119,255,0.12); border-color: rgba(110,168,255,0.6); transform: translateY(-1px) }
-
-    /* show/hide password button */
-    .eye-btn{
-      position:absolute; right:8px; top:50%; transform:translateY(-50%);
-      border:0; background:transparent; color:var(--muted); cursor:pointer; padding:6px; border-radius:8px;
+    .input-box {
+      margin-bottom: 20px;
     }
 
-    .row-between{display:flex;justify-content:space-between; align-items:center; margin-top:12px; color:var(--muted); font-size:0.9rem}
-    .btn{
-      width:100%; margin-top:18px; padding:12px 14px; border-radius:12px; border:0; cursor:pointer;
-      font-weight:600; color:#061127;
-      background: linear-gradient(90deg,var(--accent), #8fb0ff);
-      box-shadow: 0 8px 18px rgba(87,140,255,0.18), inset 0 -2px 0 rgba(0,0,0,0.05);
-      transition: transform .14s ease, box-shadow .14s ease;
-      position:relative; overflow:hidden;
-    }
-    .btn:active{ transform: translateY(1px) }
-    /* ripple */
-    .btn .ripple{
-      position:absolute; border-radius:50%; transform:scale(0); opacity:0.6; pointer-events:none;
-      background: rgba(255,255,255,0.35);
-      animation: rippleAnim .6s linear;
-    }
-    @keyframes rippleAnim { to { transform:scale(6); opacity:0 } }
-
-    .alt-btn{
-      margin-top:12px;
-      width:100%;
-      padding:10px;
-      border-radius:12px;
-      background:transparent;
-      color:var(--muted);
-      border:1px solid rgba(255,255,255,0.03);
-      cursor:pointer;
+    .input-box input {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      outline: none;
+      border-radius: 8px;
+      font-size: 14px;
     }
 
-    .foot{ margin-top:16px; text-align:center; color:var(--muted); font-size:0.9rem }
-
-    /* fog bubble */
-    .fog-bubble{
-      position:fixed;
-      width:220px; height:220px; border-radius:50%;
-      filter:blur(90px);
-      pointer-events:none;
-      mix-blend-mode: screen;
-      animation: bubbleFade 2s ease-out forwards;
-      z-index:2;
-    }
-    @keyframes bubbleFade { 0%{transform:scale(0.6); opacity:0.9} 100%{transform:scale(2.2); opacity:0} }
-
-    /* small responsive tweaks */
-    @media (max-width:920px){
-      .wrap{ grid-template-columns: 1fr; }
-      .preview{ order:2 }
-    }
-    @media (max-width:520px){
-      .card{ padding:20px }
-      .logo{ width:48px; height:48px; }
+    .btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(45deg, #ff00cc, #3333ff);
+      color: white;
+      font-size: 16px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.3s ease;
     }
 
-    /* subtle floating particles in preview mock */
-    .particle{
-      position:absolute; width:8px; height:8px; background:rgba(255,255,255,0.06); border-radius:50%;
-      animation: floaty 6s infinite ease-in-out;
-      will-change: transform, opacity;
+    .btn:hover {
+      background: linear-gradient(45deg, #00ffcc, #ff0066);
     }
-    @keyframes floaty {
-      0%{transform:translateY(0); opacity:0.9}
-      50%{transform:translateY(-26px) translateX(6px); opacity:0.6}
-      100%{transform:translateY(0); opacity:0.9}
-    }
-
   </style>
 </head>
 <body>
-
-  <div class="bg-gradient" aria-hidden="true"></div>
-  <div class="fog" aria-hidden="true"></div>
-
-  <div class="wrap" role="main">
-    <!-- Preview area (live mock) -->
-    <div class="preview" aria-hidden="false">
-      <div class="title">
-        <div class="pill">Live Preview</div>
-        <div style="flex:1"></div>
-        <div style="color:var(--muted); font-size:0.95rem">Nivgo</div>
-      </div>
-
-      <div class="app-window" id="appWindow" aria-hidden="true">
-        <div class="mock-screen" id="mockScreen">
-          <div id="mockMsg" style="font-size:1rem; color:#cfe0ff; opacity:0.95">
-            App preview — login karke yaha redirect dikh jaayega
-          </div>
-        </div>
-
-        <!-- some random small particles -->
-        <div class="particle" style="left:18px; top:20px; animation-delay:0s"></div>
-        <div class="particle" style="left:80%; top:30px; animation-delay:1.2s"></div>
-        <div class="particle" style="left:34%; top:70px; animation-delay:0.6s"></div>
-      </div>
+  <div class="login-box">
+    <!-- yaha apni Postimages wali link lagani hai -->
+    <div class="logo">
+      <img src="https://i.postimg.cc/ydX4rYzC/sample.jpg" alt="Logo">
     </div>
-
-    <!-- Login Card -->
-    <section class="card" aria-labelledby="loginTitle">
-      <div class="brand">
-        <div class="logo">NG</div>
-        <div>
-          <h1 id="loginTitle">लॉगिन करें</h1>
-          <p class="lead">अपने खाते में साइन इन करें — सुरक्षित और तेज़</p>
-        </div>
+    <h2>Nixigo Login</h2>
+    <form>
+      <div class="input-box">
+        <input type="email" placeholder="Email" required>
       </div>
-
-      <form id="loginForm" autocomplete="on" novalidate>
-        <div class="field">
-          <label for="email">ईमेल</label>
-          <div class="control">
-            <span class="input-icon">📧</span>
-            <input id="email" name="email" type="email" placeholder="you@example.com" required />
-          </div>
-        </div>
-
-        <div class="field">
-          <label for="password">पासवर्ड</label>
-          <div class="control">
-            <span class="input-icon">🔒</span>
-            <input id="password" name="password" type="password" placeholder="••••••••" minlength="6" required />
-            <button type="button" class="eye-btn" id="togglePwd" aria-label="Show password">👁️</button>
-          </div>
-        </div>
-
-        <div class="row-between" style="margin-top:10px">
-          <label style="display:flex; align-items:center; gap:8px; cursor:pointer; font-size:0.92rem">
-            <input type="checkbox" id="remember" style="accent-color: #7fb2ff" />
-            मुझे याद रखें
-          </label>
-          <a href="#" style="color:var(--muted); text-decoration:none; font-size:0.92rem" onclick="alert('Reset link (demo)');return false">पासवर्ड भूल गए?</a>
-        </div>
-
-        <button class="btn" id="loginBtn" type="submit">साइन इन</button>
-        <button class="alt-btn" type="button" onclick="alert('Google OAuth demo')">Google से जारी रखें</button>
-
-        <p class="foot">अथवा <a href="#" style="color:var(--accent)">साइन अप करें</a></p>
-      </form>
-    </section>
+      <div class="input-box">
+        <input type="password" placeholder="Password" required>
+      </div>
+      <button type="submit" class="btn">Login</button>
+    </form>
   </div>
 
   <script>
-    // Show/hide password
-    const pwd = document.getElementById('password');
-    const toggle = document.getElementById('togglePwd');
-    toggle.addEventListener('click', () => {
-      const isText = pwd.type === 'text';
-      pwd.type = isText ? 'password' : 'text';
-      toggle.textContent = isText ? '👁️' : '🙈';
+    // Background color moves with finger / mouse
+    document.addEventListener("mousemove", (e) => {
+      document.body.style.setProperty("--x", `${e.clientX}px`);
+      document.body.style.setProperty("--y", `${e.clientY}px`);
     });
 
-    // button ripple effect
-    document.querySelectorAll('.btn').forEach(btn=>{
-      btn.addEventListener('click', function(e){
-        const rect = this.getBoundingClientRect();
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        const size = Math.max(rect.width, rect.height);
-        ripple.style.width = ripple.style.height = size + 'px';
-        ripple.style.left = (e.clientX - rect.left - size/2) + 'px';
-        ripple.style.top = (e.clientY - rect.top - size/2) + 'px';
-        this.appendChild(ripple);
-        setTimeout(()=> ripple.remove(), 700);
-      });
-    });
-
-    // Click/touch fog bubbles
-    document.addEventListener('pointerdown', (e)=>{
-      // ignore if clicking on inputs/buttons? we still allow background clicks
-      const colors = [
-        'rgba(110,168,255,0.58)',
-        'rgba(255,90,110,0.52)',
-        'rgba(140,255,180,0.45)',
-        'rgba(180,140,255,0.38)'
-      ];
-      const bubble = document.createElement('div');
-      bubble.className = 'fog-bubble';
-      const size = 160 + Math.random()*120;
-      bubble.style.width = bubble.style.height = size + 'px';
-      bubble.style.left = (e.pageX - size/2) + 'px';
-      bubble.style.top = (e.pageY - size/2) + 'px';
-      bubble.style.background = colors[Math.floor(Math.random()*colors.length)];
-      document.body.appendChild(bubble);
-      setTimeout(()=> bubble.remove(), 2000);
-    });
-
-    // Demo login -> update preview area and redirect (simulate)
-    const form = document.getElementById('loginForm');
-    const mockMsg = document.getElementById('mockMsg');
-
-    form.addEventListener('submit', (ev)=>{
-      ev.preventDefault();
-      const email = document.getElementById('email').value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      // very basic client check
-      if (!email || !/@/.test(email) || password.length < 6) {
-        alert('कृपया सही ईमेल और कम से कम 6 अक्षरों का पासवर्ड डालें।');
-        return;
-      }
-
-      // show success in preview
-      mockMsg.textContent = `Welcome, ${email.split('@')[0]} — Redirecting...`;
-      // small animated success effect in preview
-      const ms = document.getElementById('mockScreen');
-      const el = document.createElement('div');
-      el.style.position = 'absolute';
-      el.style.inset = 0;
-      el.style.display = 'grid';
-      el.style.placeItems = 'center';
-      el.style.fontSize = '1.05rem';
-      el.style.fontWeight = 700;
-      el.style.background = 'linear-gradient(90deg, rgba(110,168,255,0.06), rgba(140,255,180,0.04))';
-      el.style.backdropFilter = 'blur(4px)';
-      el.style.opacity = 0;
-      el.style.transition = 'opacity .4s ease';
-      el.textContent = 'Logged in ✓';
-      ms.appendChild(el);
-      requestAnimationFrame(()=> el.style.opacity = 1);
-
-      // simulate redirect after 1s
-      setTimeout(()=>{
-        // remove overlay
-        el.style.opacity = 0;
-        setTimeout(()=> el.remove(), 400);
-
-        // Option: perform actual redirect to home.html if exists
-        // window.location.href = 'home.html';
-
-        // For demo just update preview text
-        mockMsg.textContent = `आप सफलतापूर्वक लॉगिन कर गए — स्वागत है ${email.split('@')[0]}!`;
-      }, 1000);
-    });
-
-    // Optional: keyboard accessibility improvements
-    document.addEventListener('keydown', (e)=>{
-      if(e.key === 'Enter' && document.activeElement.tagName.toLowerCase() !== 'textarea'){
-        // will be handled by form submit
-      }
+    document.addEventListener("touchmove", (e) => {
+      let touch = e.touches[0];
+      document.body.style.setProperty("--x", `${touch.clientX}px`);
+      document.body.style.setProperty("--y", `${touch.clientY}px`);
     });
   </script>
 </body>
